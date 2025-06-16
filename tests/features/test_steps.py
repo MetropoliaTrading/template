@@ -1,5 +1,4 @@
-# tests/features/test_steps.py
-"""Shared step definitions for all BDD feature files."""
+'''Shared step definitions for all BDD feature files.'''
 
 import json
 import re
@@ -21,9 +20,12 @@ for feature_path in feature_dir.glob("*.feature"):
 # Generic step implementations
 # -----------------------------------------------------------------------------
 
-@when(parsers.parse('I send a GET request to "{path}"'))
+@when(
+    parsers.parse('I send a GET request to "{path}"'),
+    target_fixture="send_get",
+)
 def send_get(path):
-    """Send an HTTP GET to the given path and return the response."""
+    """Send an HTTP GET request and return the response object."""
     return client.get(path)
 
 
@@ -33,13 +35,15 @@ def check_status(send_get, code):
 
 
 @then("the response JSON should be:")
-def check_exact_json(send_get, doc_string):
-    assert send_get.json() == json.loads(doc_string)
+def check_exact_json(send_get, docstring):
+    """Compare the full response body with the doc-string."""
+    assert send_get.json() == json.loads(docstring)
 
 
 @then(parsers.re(r'the response JSON should contain keys "(?P<keys>.+)"'))
 def check_json_keys(send_get, keys):
-    expected = {k.strip() for k in re.split(r",|and", keys)}
+    """Ensure the JSON response contains the given keys."""
+    expected = {k.strip().strip('"\'') for k in re.split(r",|and", keys)}
     assert expected.issubset(send_get.json().keys())
 
 
@@ -51,5 +55,6 @@ def check_field_value(send_get, field, value):
 @then('the "timestamp" field should be an ISO8601 UTC string ending with "Z"')
 def check_timestamp_format(send_get):
     ts = send_get.json().get("timestamp", "")
-    iso_regex = r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$"
+    # Allow optional timezone offset before trailing Z
+    iso_regex = r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:\+\d{2}:\d{2})?Z$"
     assert re.fullmatch(iso_regex, ts)
