@@ -25,3 +25,4 @@ htmlcov/
 
 # Misc
 .DS_Store
+/.coverage
