@@ -1,0 +1,27 @@
+# Python virtual environment
+.venv/
+venv/
+
+# Environment variable files
+.env
+.env.*
+
+# Deal library (if applicable)
+.deal/
+
+# PyCharm project settings
+.idea/
+
+# Bytecode and cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Test & coverage
+*.cover
+coverage.xml
+*.log
+htmlcov/
+
+# Misc
+.DS_Store
