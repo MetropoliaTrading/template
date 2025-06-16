@@ -32,4 +32,7 @@ fi
 # Install the required packages
 pip install -r requirements.txt
 
+# set up the .env file
+
+
 echo "✅ Setup complete."
