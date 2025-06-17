@@ -4,7 +4,6 @@ venv/
 
 # Environment variable files
 .env
-.env.*
 
 # Deal library (if applicable)
 .deal/

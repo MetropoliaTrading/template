@@ -2,7 +2,11 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from datetime import datetime, UTC
 
-app = FastAPI()
+app = FastAPI(
+    title="This is a Template Aplication",
+    description="This is a Template Aplication",
+    version="1.0.0"
+)
 
 @app.get("/")
 def read_root():
