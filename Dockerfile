@@ -10,7 +10,7 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . .
 
-# Upgrade pip and install dependencies
+# Set up the system environment
 RUN chmod +x ./bin/setup.sh
 
 RUN ./bin/setup.sh
