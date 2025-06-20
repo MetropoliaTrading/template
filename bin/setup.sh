@@ -48,7 +48,7 @@ if [[ -z "$APP_ENV" || "$APP_ENV" != "production" ]]; then
   if [ ! -f .env ]; then
     cp .env.sample .env
     # Insert default SQLite URL into .env
-    sed -i.bak -E 's|^DATABASE_URL=.*|DATABASE_URL=sqlite:///./app.db|' .env && rm .env.bak
+    sed -i.bak -E 's|^DATABASE_URL=.*|DATABASE_URL=postgresql://devuser:devpass@db:5432/devdb|' .env && rm .env.bak
     echo ".env file created from .env.sample with default SQLite configuration."
   else
     echo ".env file already exists."
